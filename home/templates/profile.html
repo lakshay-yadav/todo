@@ -1,0 +1,9 @@
+{% extends "master.html" %}
+
+{% block navbar %}
+{% include "navbar.html" with first_name=request.user.first_name %}
+{% endblock navbar %}
+
+{% block content %}
+<h1> This is profile page </h2>
+{% endblock content %}

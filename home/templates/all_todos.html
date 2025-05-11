@@ -1,0 +1,50 @@
+{% extends "master.html" %}
+
+{% block title %}
+All Todos
+{% endblock title %}
+
+{% block navbar %}
+{% include "navbar.html" with first_name=request.user.first_name %}
+{% endblock navbar %}
+
+{% block content %}
+<section style="background-color: #eee;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-12 col-xl-12">
+          <div class="card rounded-3">
+            <div class="card-body p-4"> 
+<table class="table mb-4">
+    <thead>
+      <tr>
+        <th scope="col-1" class="col-1">No.</th>
+        <th scope="col-2" class="col-2">Todo item</th>
+        <th scope="col-2" class="col-1">Status</th>
+        <th scope="col-4" class="col-4">Description</th>
+        <th scope="col-3" class="col-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in  items%}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{item.title}}</td> 
+        <td>{{item.status}}</td>
+        <td>{{item.description}}</td>
+        <td>
+          <a href = "/todo/delete_item/{{item.id}}"> <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger">Delete</button></a>
+          <a href = "/todo/update_status_to_progress/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">In Progress</button></a>
+          <a href = "/todo/update_status/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">Finished</button></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+  {% endblock content %}
