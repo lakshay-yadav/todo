@@ -13,4 +13,8 @@ urlpatterns = [
     path("todo/update_status/<id>", update_status_to_finish, name="update_status_to_finish"),
     path("todo/update_status_to_progress/<id>", update_status_to_progress, name="update_status_to_progress"),
     path("forget-password", forget_password, name="forget_password"),
+    path("forget-password/<username>",forget_password_authenticate,name="forget_password_authenticate"),
+    path("policy",policy,name="policy"),
+    path("delete_account/<username>",delete_account,name="delete_account"),
+    path("update_account/<username>",update_account,name="update_account"),
 ]

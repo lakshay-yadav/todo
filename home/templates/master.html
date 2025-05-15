@@ -17,5 +17,14 @@
         {% block content %}
         {% endblock content %}
         {% include "footer.html" %}
+        <script>
+            setTimeout(function () {
+              const container = document.getElementById('message-container');
+              if (container) {
+                container.style.display = 'none';
+              }
+            }, 3000);
+          </script>
+          
     </body>
 </html>

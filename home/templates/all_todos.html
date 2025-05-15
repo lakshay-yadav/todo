@@ -35,7 +35,7 @@ All Todos
         <td>{{item.description}}</td>
         <td>
           <a href = "/todo/delete_item/{{item.id}}"> <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger">Delete</button></a>
-          {% if  item.status != "In Progress" %}
+          {% if  item.status != "In Progress"%}
           <a href = "/todo/update_status_to_progress/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">In Progress</button></a>
           {% else %}
           <a href = "/todo/update_status/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">Finished</button></a>
