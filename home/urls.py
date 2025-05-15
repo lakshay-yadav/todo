@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+    path('update_todo/<id>',update_todo,name="update_todo"),
     path("profile",profile,name="profile"),
     path("todo/all_todos", show_all_todos, name="show_all_todos"),
     path("logout",logout_page,name="logout"),
@@ -11,4 +12,5 @@ urlpatterns = [
     path("todo/delete_item/<id>", delete_item, name="delete_item"),
     path("todo/update_status/<id>", update_status_to_finish, name="update_status_to_finish"),
     path("todo/update_status_to_progress/<id>", update_status_to_progress, name="update_status_to_progress"),
+    path("forget-password", forget_password, name="forget_password"),
 ]

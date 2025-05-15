@@ -15,6 +15,7 @@ All Todos
         <div class="col col-lg-12 col-xl-12">
           <div class="card rounded-3">
             <div class="card-body p-4"> 
+              {% if  items%}
 <table class="table mb-4">
     <thead>
       <tr>
@@ -34,13 +35,22 @@ All Todos
         <td>{{item.description}}</td>
         <td>
           <a href = "/todo/delete_item/{{item.id}}"> <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-danger">Delete</button></a>
+          {% if  item.status != "In Progress" %}
           <a href = "/todo/update_status_to_progress/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">In Progress</button></a>
+          {% else %}
           <a href = "/todo/update_status/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">Finished</button></a>
+          {% endif %}
+          <a href = "/update_todo/{{item.id}}"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">Update</button></a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <div class="mb-4 text-align-center"><h2>No To-Do item found</h2> </div>
+  <a href = "/todo"><button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-success ms-1">Add new Item</button></a>
+  
+  {% endif %}
 </div>
 </div>
 </div>

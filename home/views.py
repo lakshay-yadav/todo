@@ -8,31 +8,36 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required(login_url="/login")
 def home(request):
-    allTODO = todo.objects.all()
-    context = {
-        "items" : allTODO
-    }
-
     if request.method == "POST":
         data = request.POST
 
         title = data.get('title')
         description = data.get('description')
+        user = request.user
 
         print(title)
         print(description)
+
+        if not title:
+            messages.error(request,"Please Enter Title")
+            return redirect("/todo")
+        
         item = todo.objects.create(
             title = title,
             description = description,
-            status = "In progress"
+            status = "In progress",
+            user = user
         )
 
         print(item)
+        messages.success(request,"Item successfully added.")
 
         return redirect("/todo")
 
-    return render(request,"home.html",context)
+    return render(request,"home.html")
 
+
+@login_required(login_url="/login")
 def delete_item(request,id):
     print(id)
     item = todo.objects.get(id = id)
@@ -40,6 +45,8 @@ def delete_item(request,id):
 
     return redirect('/todo/all_todos')
 
+
+@login_required(login_url="/login")
 def update_status_to_finish(request,id):
     print(id)
     item = todo.objects.get(id = id)
@@ -48,6 +55,8 @@ def update_status_to_finish(request,id):
 
     return redirect('/todo/all_todos')
 
+
+@login_required(login_url="/login")
 def update_status_to_progress(request,id):
     print(id)
     item = todo.objects.get(id = id)
@@ -94,6 +103,7 @@ def register(request):
         last_name = user_data.get('last_name')
         username = user_data.get('username')
         password = user_data.get('password')
+        email = user_data.get('email')
 
         # Checking if username exists
         user = User.objects.filter(username = username)
@@ -106,6 +116,7 @@ def register(request):
             first_name = first_name,
             last_name = last_name,
             username = username,
+            email = email,
         )
 
         user.set_password(password)
@@ -122,12 +133,62 @@ def register(request):
 
 @login_required(login_url="/login")
 def show_all_todos(request):
-    allTODO = todo.objects.all()
+    allTODO = todo.objects.filter(user = request.user)
     context = {
         "items" : allTODO
     }
     return render(request,"all_todos.html",context)
 
+
 @login_required(login_url="/login")
 def profile(request):
     return render(request,"profile.html")
+
+
+@login_required(login_url="/login")
+def update_todo(request,id):
+    item = todo.objects.get(id= id)
+    context = {
+        "item" : item
+    }
+
+    if request.method == "POST":
+        data = request.POST
+        title = data.get('title')
+        description = data.get('description')
+
+        item.description = description
+        item.title = title
+
+        item.save()
+
+        messages.info(request,"Update successfully")
+
+        return render(request,"update_todo.html",context)
+
+    return render(request,"update_todo.html",context)
+
+
+def forget_password(request):
+    if request.method == "POST":
+        data = request.POST
+        username = data.get('username')
+        password = data.get('password')
+
+        user = User.objects.filter(username = username)
+
+        if not user:
+            messages.info(request,"User does not exists")
+            return redirect("/forget-password")
+        
+        else:
+            user = user[0]
+            user.set_password(password)
+        
+            user.save()
+
+            messages.success(request,"Password successfully reset.")
+            # return redirect("/login")
+
+
+    return render(request,"forget_password.html")
