@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,9 +127,9 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'lakshaybalwan@gmail.com'
+EMAIL_HOST_USER = config("MY_EMAIL")
 
-EMAIL_HOST_PASSWORD = 'vicgtbjiomonisgz'
+EMAIL_HOST_PASSWORD = config('MY_EMAIL_PASSWORD')
 
 
 # Static files (CSS, JavaScript, Images)

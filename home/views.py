@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 import random
+from decouple import config
+
 
 # Create your views here.
 @login_required(login_url="/login")
@@ -202,7 +204,7 @@ def forget_password(request):
                 send_mail(
                     subject='OTP for Password Reset',
                     message=f'Hi {first_name},\nYour OTP to reset the password on To-Do app : {otp}\nThanks for choosing us',
-                    from_email='lakshaybalwan@gmail.com',
+                    from_email= config("MY_EMAIL"),
                     recipient_list=[email],
                 )
 
